@@ -1,0 +1,60 @@
+﻿
+node_modules/
+frontend/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Build outputs
+build/
+dist/
+.tmp/
+.temp/
+
+# IDE/editor
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Jest
+jest-cache/
+jest-stare/
+.jest/**
+
+# TypeScript
+*.tsbuildinfo
+
+# OS/FS
+.Spotlight-V100
+.Trashes
+
+# Uploads/temp
+uploads/
+.tmp_uploads/
+
+# Misc
+.eslintcache
