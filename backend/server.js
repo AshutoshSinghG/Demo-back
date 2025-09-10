@@ -58,6 +58,12 @@ app.use('/reviews', reviewRoutes);
 app.use('/messages', messageRoutes); //Bi-Directional Massages
 app.use('/email', emailRoutes);  //Send verification Email
 
+app.use('/', (req, res) => {
+    return res.status(201).json({
+        success: true,
+        message: "Backend is Working",
+    });
+})
 
 // 404 Handler
 app.use((req, res) => {
