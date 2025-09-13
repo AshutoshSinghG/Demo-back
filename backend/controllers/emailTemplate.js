@@ -1,3 +1,4 @@
+//Verification Massage Templates
 module.exports.verificationTemplate = (verificationUrl) => `
   <!DOCTYPE html>
   <html lang="en">
@@ -53,6 +54,7 @@ module.exports.verificationTemplate = (verificationUrl) => `
           <div class="content">
               <p>Hello,</p>
               <p>Thank you for signing up! Please confirm your email address by Clicked the button below:</p>
+              <p>And this button or verification link work only one hour</p>
               <a href="${verificationUrl}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
     Verify Your Email
 </a>

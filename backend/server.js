@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const flash = require('connect-flash');
+const fileUpload = require('express-fileupload')
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
@@ -16,8 +17,14 @@ const connectDB = require('./config/mongoose-connection');
 const getAllArtists = require('./routes/getAllArtist');
 const emailRoutes = require('./routes/email');
 const forgotPasswordRoute = require('./routes/forgetPassword')
+const whatsappRoutes = require('./routes/whatsapp');
+const { saveImage } = require('./config/cloudinary')
 
 const app = express();
+
+app.use(fileUpload({
+    useTempFiles:true
+}))
 
 app.use(cors({
     origin: process.env.CLIENT_URL || 'http://localhost:3000',
@@ -40,7 +47,6 @@ app.use(session({
         maxAge: 5 * 24 * 60 * 60 * 1000
     }
 }));
-
 app.use(flash());
 
 // Health Check Endpoint
@@ -58,6 +64,15 @@ app.use('/reviews', reviewRoutes);
 app.use('/messages', messageRoutes); //Bi-Directional Massages
 app.use('/email', emailRoutes);  //Send verification Email
 
+
+//testing file uploader
+app.post('/abc', async (req,res) => {
+    const url = await saveImage(req.files.image.tempFilePath);
+    return res.status(200).json({
+            success: true,
+            message: url,
+        });
+})
 app.use('/', (req, res) => {
     return res.status(201).json({
         success: true,
