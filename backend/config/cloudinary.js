@@ -10,8 +10,8 @@ module.exports.saveImage = async (filePath)=> {
     try {
         const result = await cloudinary.uploader.upload(filePath, {
             folder: 'artist-platform',   // Organize uploads in a folder
-            use_filename: true,          // Keep original filename
-            unique_filename: false       // Disable unique naming if desired
+            use_filename: true,          
+            unique_filename: false       
         });
 
         return result.secure_url;  // Return HTTPS URL of uploaded image

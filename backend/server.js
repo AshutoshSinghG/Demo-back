@@ -63,6 +63,7 @@ app.use('/artist', artistProfile) // user/client see artist profile
 app.use('/reviews', reviewRoutes);
 app.use('/messages', messageRoutes); //Bi-Directional Massages
 app.use('/email', emailRoutes);  //Send verification Email
+app.use('/sendWhatsapp', whatsappRoutes)
 
 
 //testing file uploader
@@ -73,7 +74,7 @@ app.post('/abc', async (req,res) => {
             message: url,
         });
 })
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
     return res.status(201).json({
         success: true,
         message: "Backend is Working",
