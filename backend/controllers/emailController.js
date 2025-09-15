@@ -1,16 +1,15 @@
-const jwt = require('jsonwebtoken');
 const userModel = require('../models/User');
 const { sendWelcomeEmail } = require('../utils/mailer')
 
 module.exports.verifyEmail = async (req, res) => {
     try {
         const { token } = req.params;
-        const decoded = jwt.verify(token, process.env.JWT_EMAIL_VERIFY);
 
-        const user = await userModel.findById(decoded.userId);
+        const user = await userModel.findOne({VerificationEmailToken: token});
         if (!user) return res.status(404).json({ success: false, message: 'User not found' });
 
         user.isVerified = true;
+        user.VerificationEmailToken = null;
         await user.save();
 
         // Send Welcome Email after verification

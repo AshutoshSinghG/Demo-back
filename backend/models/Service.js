@@ -37,7 +37,6 @@ const serviceSchema = new mongoose.Schema(
         },
         category: {
             type: String,
-            enum: ['Interior Design', 'Drawing Classes', 'Music & Studio'],
             required: [true, 'Category is required']
         },
         price: {

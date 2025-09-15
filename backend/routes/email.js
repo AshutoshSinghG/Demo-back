@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { verifyEmail } = require('../controllers/emailController');
 const { sendVerificationEmail } = require('../utils/mailer');
-const jwt = require('jsonwebtoken');
+const { generateRandomToken } = require('../utils/generateToken');
 const userModel = require('../models/User');
 
 // Verify email (clicked link)
@@ -24,7 +24,9 @@ router.get('/resend-verify', async (req, res) => {
             return res.status(400).json({ success: false, message: "This Email is not registered" });
         }
         else{
-            const token = jwt.sign({ userId: existingUser._id }, process.env.JWT_EMAIL_VERIFY, { expiresIn: '1d' });
+            const token = generateRandomToken(24);
+            existingUser.VerificationEmailToken = token;
+            await existingUser.save();
             await sendVerificationEmail(email, token);
             return res.status(200).json({ success: true, message: "Email verification link is sent" });
         }

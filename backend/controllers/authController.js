@@ -4,8 +4,7 @@ const Review = require('../models/Review');
 const Portfolio = require('../models/Portfolio');
 const Message = require('../models/Message');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { generateToken } = require('../utils/generateToken')
+const { generateToken, generateRandomToken } = require('../utils/generateToken')
 const { sendVerificationEmail } = require('../utils/mailer');
 
 //Create New user
@@ -24,6 +23,7 @@ module.exports.createUser = async (req, res) => {
             return res.status(400).json({ success: false, message: "Email already registered" });
         }
 
+        const verifyToken = generateRandomToken(24);
         // Password hash
         bcrypt.genSalt(12, (error, salt) => {
             bcrypt.hash(password, salt, async (error, hash) => {
@@ -34,13 +34,14 @@ module.exports.createUser = async (req, res) => {
                         name,
                         email,
                         password: hash,
-                        role
+                        role,
+                        VerificationEmailToken: verifyToken
                     })
 
-                    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_EMAIL_VERIFY, { expiresIn: '1d' });
+                    
 
                     // Send verification email (e.g., after user signup)
-                    await sendVerificationEmail(email, token);
+                    await sendVerificationEmail(email, verifyToken);
                     await newUser.save()
 
                     return res.status(201).json({

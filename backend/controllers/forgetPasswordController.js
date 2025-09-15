@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
 const userModel = require('../models/User');
 const { sendForgotPasswordEmail, afterResetPasswordEmail } = require('../utils/mailer');
+const { generateRandomToken } = require('../utils/generateToken');
 const bcrypt = require('bcrypt');
 
 module.exports.forgotPassword = async (req, res) => {
@@ -12,9 +12,10 @@ module.exports.forgotPassword = async (req, res) => {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        const resetToken = jwt.sign({ id: user._id }, process.env.JWT_RESET_PASS_SECRET, { expiresIn: '1h' });
+        const resetToken = generateRandomToken(24);
 
-
+        user.resetPaswordToken = resetToken;
+        await user.save();
         await sendForgotPasswordEmail(user, resetToken);
         return res.status(200).json({ success: true, message: 'Password reset email sent' });
 
@@ -29,16 +30,14 @@ module.exports.resetPassword = async (req, res) => {
         const { token } = req.params;
         const { newPassword } = req.body;
 
-        const decoded = jwt.verify(token, process.env.JWT_RESET_PASS_SECRET);
-        const user = await userModel.findById(decoded.id);
-
+        const user = await userModel.findOne({resetPaswordToken: token});
         if (!user) {
             return res.status(404).json({ success: false, message: 'Invalid token or user not found' });
         }
-
         bcrypt.genSalt(12, (error, salt) => {
             bcrypt.hash(newPassword, salt, async (error, hash) => {
                 user.password = hash;
+                user.resetPaswordToken = null;
                 await user.save();
             })
         })

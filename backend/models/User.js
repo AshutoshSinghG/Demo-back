@@ -29,6 +29,8 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+        VerificationEmailToken: String,
+        resetPaswordToken: String,
         services: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Service'
