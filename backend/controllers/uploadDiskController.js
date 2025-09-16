@@ -1,7 +1,7 @@
 const PortfolioModel = require('../models/Portfolio');
 const UserModel = require('../models/User');
 module.exports.uploadImageDisk = async (req, res) => {
-
+console.log("iddddddddddddiiiiiii:", req.user._id)
     const user = await UserModel.findById(req.user._id);
     const portfolio = await PortfolioModel.findById(user.portfolio);
     try {

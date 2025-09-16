@@ -24,7 +24,7 @@ const getServicesRoutes = require('./routes/getAllServices');
 const app = express();
 
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
     credentials: true
 }));
 
@@ -64,7 +64,7 @@ app.use('/messages', messageRoutes); //Bi-Directional Massages
 app.use('/email', emailRoutes);  //Send verification Email
 app.use('/book', whatsappRoutes) //Booking through Whatsapp
 app.use('/api/upload', uploadDiskRoutes); // upload image
-app.use('/services', getServicesRoutes);
+app.use('/services', getServicesRoutes); //show All Services
 
 app.get('/', (req, res) => {
     return res.status(201).json({
