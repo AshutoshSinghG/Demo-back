@@ -4,6 +4,6 @@ const { isLogedIn } = require('../middlewares/isLogedIn')
 const { sendMessageController } = require('../controllers/whatsappMassegeController')
 
 
-router.get('/', isLogedIn, sendMessageController)
+router.get('/WhatsApp', isLogedIn, sendMessageController)
 
 module.exports = router;

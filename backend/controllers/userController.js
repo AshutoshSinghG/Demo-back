@@ -57,7 +57,7 @@ module.exports.createPortfolio = async (req, res) => {
 
     const { title, description, images, mediaUrl, projectType, caseStudy } = req.body;
 
-    if (!title || !description || !images || !mediaUrl || !projectType || !caseStudy) {
+    if (!title || !description || !projectType || !caseStudy) {
       return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
@@ -65,7 +65,6 @@ module.exports.createPortfolio = async (req, res) => {
       artist: userId,
       title,
       description,
-      images,
       mediaUrl,
       projectType,
       caseStudy
