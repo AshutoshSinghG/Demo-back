@@ -19,6 +19,7 @@ const emailRoutes = require('./routes/email');
 const forgotPasswordRoute = require('./routes/forgetPassword')
 const whatsappRoutes = require('./routes/whatsapp');
 const uploadDiskRoutes = require('./routes/uploadDisk');
+const getServicesRoutes = require('./routes/getAllServices');
 
 const app = express();
 
@@ -61,8 +62,9 @@ app.use('/artist', artistProfile) // user/client see artist profile
 app.use('/reviews', reviewRoutes);
 app.use('/messages', messageRoutes); //Bi-Directional Massages
 app.use('/email', emailRoutes);  //Send verification Email
-app.use('/book', whatsappRoutes)
+app.use('/book', whatsappRoutes) //Booking through Whatsapp
 app.use('/api/upload', uploadDiskRoutes); // upload image
+app.use('/services', getServicesRoutes);
 
 app.get('/', (req, res) => {
     return res.status(201).json({
