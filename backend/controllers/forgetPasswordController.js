@@ -31,6 +31,7 @@ module.exports.resetPassword = async (req, res) => {
         const { newPassword } = req.body;
 
         const user = await userModel.findOne({resetPaswordToken: token});
+        console.log(user)
         if (!user) {
             return res.status(404).json({ success: false, message: 'Invalid token or user not found' });
         }
