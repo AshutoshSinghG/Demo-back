@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema(
             required: [true, 'Password is required'],
             minlength: [6, 'Password must be at least 6 characters long']
         },
+        mobile: {
+            type: Number,
+            required: [true, 'Mobile is required'],
+            minlength: 10,
+            maxlength: 12,
+        },
         role: {
             type: String,
             enum: ['client', 'artist'],

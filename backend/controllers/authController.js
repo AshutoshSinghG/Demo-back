@@ -10,10 +10,10 @@ const { sendVerificationEmail } = require('../utils/mailer');
 //Create New user
 module.exports.createUser = async (req, res) => {
     try {
-        const { name, email, password, role } = req.body;
+        const { name, email, password, mobile, role } = req.body;
 
         // Validation
-        if (!name || !email || !password) {
+        if (!name || !email || !password || !mobile) {
             return res.status(400).json({ success: false, message: "All required fields must be provided" });
         }
 
@@ -34,6 +34,7 @@ module.exports.createUser = async (req, res) => {
                         name,
                         email,
                         password: hash,
+                        mobile,
                         role,
                         VerificationEmailToken: verifyToken
                     })

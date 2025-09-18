@@ -56,7 +56,7 @@ app.get('/health', (req, res) => {
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api', forgotPasswordRoute)
+app.use('/api', forgotPasswordRoute) //Forgot Password
 app.use('/getAllArtist', getAllArtists)  //for show all artist profile card at home page
 app.use('/artist', artistProfile) // user/client see artist profile
 app.use('/reviews', reviewRoutes);
